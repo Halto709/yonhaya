@@ -64,6 +64,11 @@ public class YonhayaController {
     return "4haya.html";
   }
 
+  @GetMapping("help")
+  public String showHelp() {
+    return "help.html";
+  }
+
   @GetMapping("di")
   public String joinRoom(Principal prin, ModelMap model) {
     String loginUser = prin.getName();
