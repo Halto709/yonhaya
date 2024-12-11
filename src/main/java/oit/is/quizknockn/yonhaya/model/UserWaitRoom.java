@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class UserWaitRoom {
   private int waitingUser = 0;
   private boolean finishFlag = false;
-  private ArrayList<User> userResult = new ArrayList<>();
+  private ArrayList<User> userResult;
 
   public void clear() {
     waitingUser = 0;
@@ -38,8 +38,8 @@ public class UserWaitRoom {
     return userResult;
   }
 
-  public void setUserResult(ArrayList<User> userResult) {
-    userResult = userResult;
+  public void setUserResult(ArrayList<User> user_result) {
+    userResult = user_result;
   }
 
 }

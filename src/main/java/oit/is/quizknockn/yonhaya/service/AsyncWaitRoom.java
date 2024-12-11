@@ -62,6 +62,7 @@ public class AsyncWaitRoom {
 
         // 新しいユーザが追加されていれば，その情報を送信
         logger.info("send(RoomUsers)");
+
         TimeUnit.MILLISECONDS.sleep(100);// 0.1秒STOP
         // JSONオブジェクトがクライアントに送付される
         emitter.send(userWaitRoom);
@@ -75,7 +76,6 @@ public class AsyncWaitRoom {
       }
     }
     emitter.complete();// emitterの後始末．明示的にブラウザとの接続を一度切る．
-
   }
 
 }

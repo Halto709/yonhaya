@@ -4,6 +4,7 @@
   <script>
     window.onload = function () {
 
+
       const sse = new EventSource('/yonhaya/waitInfo');
       sse.onmessage = function (event) {
         console.log("sse.onmessage");
@@ -12,38 +13,36 @@
         var finish_flag = userWaitRoom.finishFlag;
         var user_result = userWaitRoom.userResult;
         var results = "<a>他の人の解答を待ってます！</a>";
-        var userRank;
-
-        for (var i = 0; i < user_result.length; i++) {
-          userRank += "<p>" + user_result[i].rank + "位</p><p>ユーザ名 : " + user_result[i].userName + "</p><p>得点 : " + user_result[i].point + "点</p>";
-        }
+        var userRank = "";
 
         if (finish_flag) {
-          results += "<a href='/yonhaya/finish'>結果発表</a>"
+          results += "<a href='/yonhaya/finish'>結果発表</a>";
         }
         if (user_number == 2) {
-          // 数秒待機してからクイズ画面に遷移
+          for (var i = 1; i <= user_result.length; i++) {
+            userRank += `<p>${user_result[i - 1].rank}位</p><p>ユーザ名 : ${user_result[i - 1].userName}</p><p>${user_result[i - 1].point}点</p>`;
+          }
           setTimeout(function () {
             window.location.href = '/yonhaya/quiz';
           }, 2000); // 2秒
         }
 
-
-        document.getElementById("waitInfo").innerHTML = results;
         document.getElementById("rank").innerHTML = userRank;
-
+        document.getElementById("waitInfo").innerHTML = results;
       }
     }
   </script>
 </head>
 
-<div th:if="${result}">
-  [[${result}]]
-</div>
+<body>
+  <div th:if="${result}">
+    [[${result}]]
+  </div>
 
-<a>現在のランキング</a>
-<div id="rank">
-</div>
+  <div id="waitInfo">
+  </div>
 
-<div id="waitInfo">
-</div>
+  <div id="rank">
+    <a>現在のランキング</a>
+  </div>
+</body>
