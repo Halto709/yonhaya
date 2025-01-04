@@ -1,5 +1,14 @@
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>クイズ</title>
+
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+
+<head>
+  <meta charset="utf-8">
   <title>janken result</title>
   <script>
     window.onload = function () {
@@ -15,6 +24,7 @@
         var results = "";
         var userRank = "";
 
+
         // 終了画面への自動遷移
         if (finish_flag) {
           results += "<a>問題は終了しました<br>結果をお待ちください</a>";
@@ -25,9 +35,25 @@
           results += "<a>他の人の解答を待ってます！</a>";
         }
         if (user_number == 2) {
-          for (var i = 1; i <= user_result.length; i++) {
-            userRank += `<p>${user_result[i - 1].rank}位</p><p>ユーザ名 : ${user_result[i - 1].userName}</p><p>${user_result[i - 1].point}点</p>`;
+          userRank += `<a>現在のランキング</a>
+                       <table class="table">
+                       <thead class="table-dark">
+                          <tr>
+                            <th>順位</th>
+                            <th>ユーザー名</th>
+                            <th>得点</th>
+                          </tr>
+                        </thead>
+                        <tbody>`;
+          for (var i = 0; i < user_result.length; i++) {
+            userRank += `<tr>
+                          <td>${user_result[i].rank}位</td>
+                          <td>${user_result[i].userName}</td>
+                          <td>${user_result[i].point}点</td>
+                         </tr>`;
           }
+          userRank += `</tbody></table>`;
+
           setTimeout(function () {
             window.location.href = '/yonhaya/quiz';
           }, 2000); // 2秒
@@ -40,15 +66,18 @@
   </script>
 </head>
 
-<body>
-  <div th:if="${result}">
-    [[${result}]]
-  </div>
+<bodystyle="height: 100vh; margin: 0;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+    <div th:if="${result}">
+      [[${result}]]
+    </div>
 
-  <div id="waitInfo">
-  </div>
+    <div id="waitInfo">
+    </div>
 
-  <div id="rank">
-    <a>現在のランキング</a>
-  </div>
-</body>
+    <div id="rank">
+      <a>現在のランキング</a>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    </body>
